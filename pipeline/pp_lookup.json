@@ -118,7 +118,8 @@
 					"dataset": {
 						"referenceName": "ds_wrangling2",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			}
 		],
