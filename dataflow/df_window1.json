@@ -1,0 +1,51 @@
+{
+	"name": "df_window1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_wrangling1",
+						"type": "DatasetReference"
+					},
+					"name": "windowsource1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_csv_out",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "windowemppartician1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as integer,",
+				"          emp_name as string,",
+				"          emp_salary as integer,",
+				"          dept_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> windowsource1",
+				"windowsource1 window(over(dept_id),",
+				"     desc(emp_salary, true),",
+				"     avg_salary = avg(emp_salary)) ~> windowemppartician1",
+				"windowemppartician1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['emp_partician'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
