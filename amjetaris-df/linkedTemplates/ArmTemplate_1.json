@@ -335,7 +335,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "emp_2"
+					"table": "employee"
 				}
 			},
 			"dependsOn": []
