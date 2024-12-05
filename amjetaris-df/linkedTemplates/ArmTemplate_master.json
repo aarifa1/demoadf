@@ -1,0 +1,570 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "amjetaris-df"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
+		"AzureBlobStorage3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3'"
+		},
+		"AzureBlobStorage3_csv_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3_csv'"
+		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"AzureSqlDatabase111_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase111'"
+		},
+		"blob_wrangling_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'blob_wrangling'"
+		},
+		"destlink_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'destlink'"
+		},
+		"lk_dest_db1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lk_dest_db1'"
+		},
+		"lk_destdb1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lk_destdb1'"
+		},
+		"lk_dstdb1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lk_dstdb1'"
+		},
+		"lk_excel1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lk_excel1'"
+		},
+		"lk_exceldb_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lk_exceldb'"
+		},
+		"lk_source_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'lk_source'"
+		},
+		"lk_source1excel_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'lk_source1excel'"
+		},
+		"lk_src_ex1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'lk_src_ex1'"
+		},
+		"lk_srcex1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'lk_srcex1'"
+		},
+		"lk_srcexl1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'lk_srcexl1'"
+		},
+		"lnk_sql_table1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lnk_sql_table1'"
+		},
+		"lnk_sql_table2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lnk_sql_table2'"
+		},
+		"sourcelink_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'sourcelink'"
+		},
+		"sqldb_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'sqldb'"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-blob1.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "aarif.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbaarif1"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sal-aarif1"
+		},
+		"AzureSqlDatabase111_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "aarif.database.windows.net"
+		},
+		"AzureSqlDatabase111_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbaarif1"
+		},
+		"AzureSqlDatabase111_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": " sal-aarif1"
+		},
+		"Sql_dynamicval2_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "@{linkedService().domain_dest}"
+		},
+		"Sql_dynamicval2_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().db_dest}"
+		},
+		"Sql_dynamicval2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "@{linkedService().user_dest}"
+		},
+		"blob_keyvoult_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "sc-kv-blob1"
+		},
+		"destlink_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "servkhan.database.windows.net"
+		},
+		"destlink_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "rufai"
+		},
+		"destlink_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "serv1"
+		},
+		"lk_dest_db1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sdsrg107.database.windows.net"
+		},
+		"lk_dest_db1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbrg107"
+		},
+		"lk_dest_db1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "salrg107"
+		},
+		"lk_destdb1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sdsrg107.database.windows.net"
+		},
+		"lk_destdb1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbrg107"
+		},
+		"lk_destdb1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "salrg107"
+		},
+		"lk_dstdb1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sdsrg107.database.windows.net"
+		},
+		"lk_dstdb1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbrg107"
+		},
+		"lk_dstdb1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "salrg107"
+		},
+		"lk_excel1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sdsrg107.database.windows.net"
+		},
+		"lk_excel1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbrg107"
+		},
+		"lk_excel1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "salrg107"
+		},
+		"lk_exceldb_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sdsrg107"
+		},
+		"lk_exceldb_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbrg107"
+		},
+		"lk_exceldb_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "salrg107"
+		},
+		"lnk_sql_table1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "aarif.database.windows.net"
+		},
+		"lnk_sql_table1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().database_name}"
+		},
+		"lnk_sql_table1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sal-aarif1"
+		},
+		"lnk_sql_table2_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "aarif.database.windows.net"
+		},
+		"lnk_sql_table2_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().database_name}"
+		},
+		"lnk_sql_table2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sal-aarif1"
+		},
+		"sql_dynamicval1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "@{linkedService().domain_namesrc}"
+		},
+		"sql_dynamicval1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().db_namesrc}"
+		},
+		"sql_dynamicval1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "@{linkedService().user_namesrc}"
+		},
+		"sqldb_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "aarif.database.windows.net"
+		},
+		"sqldb_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dbaarif1"
+		},
+		"sqldb_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sal-aarif1"
+		},
+		"trg_sto_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/2b379197-27b4-4219-8bd6-b67f50ad9ab5/resourceGroups/khan1/providers/Microsoft.Storage/storageAccounts/amjetstorage"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "amjetaris-df_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureBlobStorage2_connectionString": {
+						"value": "[parameters('AzureBlobStorage2_connectionString')]"
+					},
+					"AzureBlobStorage3_connectionString": {
+						"value": "[parameters('AzureBlobStorage3_connectionString')]"
+					},
+					"AzureBlobStorage3_csv_connectionString": {
+						"value": "[parameters('AzureBlobStorage3_csv_connectionString')]"
+					},
+					"AzureSqlDatabase1_password": {
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					},
+					"AzureSqlDatabase111_password": {
+						"value": "[parameters('AzureSqlDatabase111_password')]"
+					},
+					"blob_wrangling_connectionString": {
+						"value": "[parameters('blob_wrangling_connectionString')]"
+					},
+					"destlink_password": {
+						"value": "[parameters('destlink_password')]"
+					},
+					"lk_dest_db1_password": {
+						"value": "[parameters('lk_dest_db1_password')]"
+					},
+					"lk_destdb1_password": {
+						"value": "[parameters('lk_destdb1_password')]"
+					},
+					"lk_dstdb1_password": {
+						"value": "[parameters('lk_dstdb1_password')]"
+					},
+					"lk_excel1_password": {
+						"value": "[parameters('lk_excel1_password')]"
+					},
+					"lk_exceldb_password": {
+						"value": "[parameters('lk_exceldb_password')]"
+					},
+					"lk_source_connectionString": {
+						"value": "[parameters('lk_source_connectionString')]"
+					},
+					"lk_source1excel_connectionString": {
+						"value": "[parameters('lk_source1excel_connectionString')]"
+					},
+					"lk_src_ex1_connectionString": {
+						"value": "[parameters('lk_src_ex1_connectionString')]"
+					},
+					"lk_srcex1_connectionString": {
+						"value": "[parameters('lk_srcex1_connectionString')]"
+					},
+					"lk_srcexl1_connectionString": {
+						"value": "[parameters('lk_srcexl1_connectionString')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"AzureSqlDatabase111_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase111_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase111_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase111_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase111_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase111_properties_typeProperties_userName')]"
+					},
+					"Sql_dynamicval2_properties_typeProperties_server": {
+						"value": "[parameters('Sql_dynamicval2_properties_typeProperties_server')]"
+					},
+					"Sql_dynamicval2_properties_typeProperties_database": {
+						"value": "[parameters('Sql_dynamicval2_properties_typeProperties_database')]"
+					},
+					"Sql_dynamicval2_properties_typeProperties_userName": {
+						"value": "[parameters('Sql_dynamicval2_properties_typeProperties_userName')]"
+					},
+					"destlink_properties_typeProperties_server": {
+						"value": "[parameters('destlink_properties_typeProperties_server')]"
+					},
+					"destlink_properties_typeProperties_database": {
+						"value": "[parameters('destlink_properties_typeProperties_database')]"
+					},
+					"destlink_properties_typeProperties_userName": {
+						"value": "[parameters('destlink_properties_typeProperties_userName')]"
+					},
+					"lk_dest_db1_properties_typeProperties_server": {
+						"value": "[parameters('lk_dest_db1_properties_typeProperties_server')]"
+					},
+					"lk_dest_db1_properties_typeProperties_database": {
+						"value": "[parameters('lk_dest_db1_properties_typeProperties_database')]"
+					},
+					"lk_dest_db1_properties_typeProperties_userName": {
+						"value": "[parameters('lk_dest_db1_properties_typeProperties_userName')]"
+					},
+					"lk_destdb1_properties_typeProperties_server": {
+						"value": "[parameters('lk_destdb1_properties_typeProperties_server')]"
+					},
+					"lk_destdb1_properties_typeProperties_database": {
+						"value": "[parameters('lk_destdb1_properties_typeProperties_database')]"
+					},
+					"lk_destdb1_properties_typeProperties_userName": {
+						"value": "[parameters('lk_destdb1_properties_typeProperties_userName')]"
+					},
+					"lk_dstdb1_properties_typeProperties_server": {
+						"value": "[parameters('lk_dstdb1_properties_typeProperties_server')]"
+					},
+					"lk_dstdb1_properties_typeProperties_database": {
+						"value": "[parameters('lk_dstdb1_properties_typeProperties_database')]"
+					},
+					"lk_dstdb1_properties_typeProperties_userName": {
+						"value": "[parameters('lk_dstdb1_properties_typeProperties_userName')]"
+					},
+					"lk_excel1_properties_typeProperties_server": {
+						"value": "[parameters('lk_excel1_properties_typeProperties_server')]"
+					},
+					"lk_excel1_properties_typeProperties_database": {
+						"value": "[parameters('lk_excel1_properties_typeProperties_database')]"
+					},
+					"lk_excel1_properties_typeProperties_userName": {
+						"value": "[parameters('lk_excel1_properties_typeProperties_userName')]"
+					},
+					"lk_exceldb_properties_typeProperties_server": {
+						"value": "[parameters('lk_exceldb_properties_typeProperties_server')]"
+					},
+					"lk_exceldb_properties_typeProperties_database": {
+						"value": "[parameters('lk_exceldb_properties_typeProperties_database')]"
+					},
+					"lk_exceldb_properties_typeProperties_userName": {
+						"value": "[parameters('lk_exceldb_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "amjetaris-df_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"lnk_sql_table1_password": {
+						"value": "[parameters('lnk_sql_table1_password')]"
+					},
+					"lnk_sql_table2_password": {
+						"value": "[parameters('lnk_sql_table2_password')]"
+					},
+					"sourcelink_connectionString": {
+						"value": "[parameters('sourcelink_connectionString')]"
+					},
+					"sqldb_password": {
+						"value": "[parameters('sqldb_password')]"
+					},
+					"lnk_sql_table1_properties_typeProperties_server": {
+						"value": "[parameters('lnk_sql_table1_properties_typeProperties_server')]"
+					},
+					"lnk_sql_table1_properties_typeProperties_database": {
+						"value": "[parameters('lnk_sql_table1_properties_typeProperties_database')]"
+					},
+					"lnk_sql_table1_properties_typeProperties_userName": {
+						"value": "[parameters('lnk_sql_table1_properties_typeProperties_userName')]"
+					},
+					"lnk_sql_table2_properties_typeProperties_server": {
+						"value": "[parameters('lnk_sql_table2_properties_typeProperties_server')]"
+					},
+					"lnk_sql_table2_properties_typeProperties_database": {
+						"value": "[parameters('lnk_sql_table2_properties_typeProperties_database')]"
+					},
+					"lnk_sql_table2_properties_typeProperties_userName": {
+						"value": "[parameters('lnk_sql_table2_properties_typeProperties_userName')]"
+					},
+					"sql_dynamicval1_properties_typeProperties_server": {
+						"value": "[parameters('sql_dynamicval1_properties_typeProperties_server')]"
+					},
+					"sql_dynamicval1_properties_typeProperties_database": {
+						"value": "[parameters('sql_dynamicval1_properties_typeProperties_database')]"
+					},
+					"sql_dynamicval1_properties_typeProperties_userName": {
+						"value": "[parameters('sql_dynamicval1_properties_typeProperties_userName')]"
+					},
+					"sqldb_properties_typeProperties_server": {
+						"value": "[parameters('sqldb_properties_typeProperties_server')]"
+					},
+					"sqldb_properties_typeProperties_database": {
+						"value": "[parameters('sqldb_properties_typeProperties_database')]"
+					},
+					"sqldb_properties_typeProperties_userName": {
+						"value": "[parameters('sqldb_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'amjetaris-df_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "amjetaris-df_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"blob_keyvoult_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('blob_keyvoult_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'amjetaris-df_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "amjetaris-df_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'amjetaris-df_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "amjetaris-df_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"trg_sto_properties_typeProperties_scope": {
+						"value": "[parameters('trg_sto_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'amjetaris-df_ArmTemplate_3')]"
+			]
+		}
+	]
+}

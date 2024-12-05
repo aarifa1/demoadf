@@ -1,0 +1,207 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "amjetaris-df"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage3_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage3_csv_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase111_password": {
+			"value": ""
+		},
+		"blob_wrangling_connectionString": {
+			"value": ""
+		},
+		"destlink_password": {
+			"value": ""
+		},
+		"lk_dest_db1_password": {
+			"value": ""
+		},
+		"lk_destdb1_password": {
+			"value": ""
+		},
+		"lk_dstdb1_password": {
+			"value": ""
+		},
+		"lk_excel1_password": {
+			"value": ""
+		},
+		"lk_exceldb_password": {
+			"value": ""
+		},
+		"lk_source_connectionString": {
+			"value": ""
+		},
+		"lk_source1excel_connectionString": {
+			"value": ""
+		},
+		"lk_src_ex1_connectionString": {
+			"value": ""
+		},
+		"lk_srcex1_connectionString": {
+			"value": ""
+		},
+		"lk_srcexl1_connectionString": {
+			"value": ""
+		},
+		"lnk_sql_table1_password": {
+			"value": ""
+		},
+		"lnk_sql_table2_password": {
+			"value": ""
+		},
+		"sourcelink_connectionString": {
+			"value": ""
+		},
+		"sqldb_password": {
+			"value": ""
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://kv-blob1.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "aarif.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "dbaarif1"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "sal-aarif1"
+		},
+		"AzureSqlDatabase111_properties_typeProperties_server": {
+			"value": "aarif.database.windows.net"
+		},
+		"AzureSqlDatabase111_properties_typeProperties_database": {
+			"value": "dbaarif1"
+		},
+		"AzureSqlDatabase111_properties_typeProperties_userName": {
+			"value": " sal-aarif1"
+		},
+		"Sql_dynamicval2_properties_typeProperties_server": {
+			"value": "@{linkedService().domain_dest}"
+		},
+		"Sql_dynamicval2_properties_typeProperties_database": {
+			"value": "@{linkedService().db_dest}"
+		},
+		"Sql_dynamicval2_properties_typeProperties_userName": {
+			"value": "@{linkedService().user_dest}"
+		},
+		"blob_keyvoult_properties_typeProperties_connectionString_secretName": {
+			"value": "sc-kv-blob1"
+		},
+		"destlink_properties_typeProperties_server": {
+			"value": "servkhan.database.windows.net"
+		},
+		"destlink_properties_typeProperties_database": {
+			"value": "rufai"
+		},
+		"destlink_properties_typeProperties_userName": {
+			"value": "serv1"
+		},
+		"lk_dest_db1_properties_typeProperties_server": {
+			"value": "sdsrg107.database.windows.net"
+		},
+		"lk_dest_db1_properties_typeProperties_database": {
+			"value": "dbrg107"
+		},
+		"lk_dest_db1_properties_typeProperties_userName": {
+			"value": "salrg107"
+		},
+		"lk_destdb1_properties_typeProperties_server": {
+			"value": "sdsrg107.database.windows.net"
+		},
+		"lk_destdb1_properties_typeProperties_database": {
+			"value": "dbrg107"
+		},
+		"lk_destdb1_properties_typeProperties_userName": {
+			"value": "salrg107"
+		},
+		"lk_dstdb1_properties_typeProperties_server": {
+			"value": "sdsrg107.database.windows.net"
+		},
+		"lk_dstdb1_properties_typeProperties_database": {
+			"value": "dbrg107"
+		},
+		"lk_dstdb1_properties_typeProperties_userName": {
+			"value": "salrg107"
+		},
+		"lk_excel1_properties_typeProperties_server": {
+			"value": "sdsrg107.database.windows.net"
+		},
+		"lk_excel1_properties_typeProperties_database": {
+			"value": "dbrg107"
+		},
+		"lk_excel1_properties_typeProperties_userName": {
+			"value": "salrg107"
+		},
+		"lk_exceldb_properties_typeProperties_server": {
+			"value": "sdsrg107"
+		},
+		"lk_exceldb_properties_typeProperties_database": {
+			"value": "dbrg107"
+		},
+		"lk_exceldb_properties_typeProperties_userName": {
+			"value": "salrg107"
+		},
+		"lnk_sql_table1_properties_typeProperties_server": {
+			"value": "aarif.database.windows.net"
+		},
+		"lnk_sql_table1_properties_typeProperties_database": {
+			"value": "@{linkedService().database_name}"
+		},
+		"lnk_sql_table1_properties_typeProperties_userName": {
+			"value": "sal-aarif1"
+		},
+		"lnk_sql_table2_properties_typeProperties_server": {
+			"value": "aarif.database.windows.net"
+		},
+		"lnk_sql_table2_properties_typeProperties_database": {
+			"value": "@{linkedService().database_name}"
+		},
+		"lnk_sql_table2_properties_typeProperties_userName": {
+			"value": "sal-aarif1"
+		},
+		"sql_dynamicval1_properties_typeProperties_server": {
+			"value": "@{linkedService().domain_namesrc}"
+		},
+		"sql_dynamicval1_properties_typeProperties_database": {
+			"value": "@{linkedService().db_namesrc}"
+		},
+		"sql_dynamicval1_properties_typeProperties_userName": {
+			"value": "@{linkedService().user_namesrc}"
+		},
+		"sqldb_properties_typeProperties_server": {
+			"value": "aarif.database.windows.net"
+		},
+		"sqldb_properties_typeProperties_database": {
+			"value": "dbaarif1"
+		},
+		"sqldb_properties_typeProperties_userName": {
+			"value": "sal-aarif1"
+		},
+		"trg_sto_properties_typeProperties_scope": {
+			"value": "/subscriptions/2b379197-27b4-4219-8bd6-b67f50ad9ab5/resourceGroups/khan1/providers/Microsoft.Storage/storageAccounts/amjetstorage"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
