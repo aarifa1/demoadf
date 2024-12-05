@@ -1,0 +1,59 @@
+{
+	"name": "df_alterrow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_wrangling1",
+						"type": "DatasetReference"
+					},
+					"name": "empalterrow"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable3",
+						"type": "DatasetReference"
+					},
+					"name": "sinkemp"
+				}
+			],
+			"transformations": [
+				{
+					"name": "alterRowfun1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as integer,",
+				"          emp_name as string,",
+				"          emp_salary as integer,",
+				"          dept_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> empalterrow",
+				"empalterrow alterRow(deleteIf(emp_id==8),",
+				"     updateIf(emp_name=='nirmal')) ~> alterRowfun1",
+				"alterRowfun1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          emp_id as integer,",
+				"          emp_name as string,",
+				"          emp_salary as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkemp"
+			]
+		}
+	}
+}
