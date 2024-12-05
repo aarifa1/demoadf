@@ -1,5 +1,5 @@
 {
-	"name": "pipeline4",
+	"name": "pp_parameterise_copydata",
 	"properties": {
 		"activities": [
 			{
