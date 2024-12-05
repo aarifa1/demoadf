@@ -1,0 +1,91 @@
+{
+	"name": "DFconditionalsplitDEPT",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_wrangling1",
+						"type": "DatasetReference"
+					},
+					"name": "employeedeptid"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_csv_out",
+						"type": "DatasetReference"
+					},
+					"name": "csfinancesink"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_csv_out",
+						"type": "DatasetReference"
+					},
+					"name": "csarchitectsink"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_csv_out",
+						"type": "DatasetReference"
+					},
+					"name": "cstestingout"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_csv_out",
+						"type": "DatasetReference"
+					},
+					"name": "csnodept"
+				}
+			],
+			"transformations": [
+				{
+					"name": "departmentsoutput"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string,",
+				"          emp_salary as string,",
+				"          dept_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employeedeptid",
+				"employeedeptid split(equals(dept_id,'100'),",
+				"     equals(dept_id,'101'),",
+				"     equals(dept_id,'102'),",
+				"     disjoint: false) ~> departmentsoutput@(financeout, testingout, architectout, nodept)",
+				"departmentsoutput@financeout sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['financeout'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> csfinancesink",
+				"departmentsoutput@architectout sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['architectout'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> csarchitectsink",
+				"departmentsoutput@testingout sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['testingout'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> cstestingout",
+				"departmentsoutput@nodept sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['nodeptout'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> csnodept"
+			]
+		}
+	}
+}

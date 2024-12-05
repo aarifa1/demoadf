@@ -1,0 +1,18 @@
+{
+	"name": "delete_input",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_wrangling",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "outputwrangling"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

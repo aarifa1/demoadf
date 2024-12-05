@@ -1,0 +1,65 @@
+{
+	"name": "DF_exist_deptid",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_wrangling1",
+						"type": "DatasetReference"
+					},
+					"name": "employeedeptid"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_wrangling2",
+						"type": "DatasetReference"
+					},
+					"name": "deptsrc1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_csv_out",
+						"type": "DatasetReference"
+					},
+					"name": "csvexistdeptid"
+				}
+			],
+			"transformations": [
+				{
+					"name": "empdeptidexist"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string,",
+				"          emp_salary as string,",
+				"          dept_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employeedeptid",
+				"source(output(",
+				"          dep_id as string,",
+				"          dept_name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> deptsrc1",
+				"employeedeptid, deptsrc1 exists(dept_id == dep_id,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> empdeptidexist",
+				"empdeptidexist sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['existdeptid'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> csvexistdeptid"
+			]
+		}
+	}
+}

@@ -1,0 +1,210 @@
+{
+	"name": "pp_df_parameterise",
+	"properties": {
+		"description": "copy datas from CSV to parquet",
+		"activities": [
+			{
+				"name": "blob to blob",
+				"description": "copy datas from csv to parquet",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "csv1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Df_parameterise",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference",
+						"parameters": {
+							"domain_src": {
+								"value": "'@{pipeline().parameters.domain_src}'",
+								"type": "Expression"
+							},
+							"user_src": {
+								"value": "'@{pipeline().parameters.user_src}'",
+								"type": "Expression"
+							},
+							"pwd_src": {
+								"value": "'@{pipeline().parameters.pwd_src}'",
+								"type": "Expression"
+							},
+							"tab_src": {
+								"value": "'@{pipeline().parameters.tab_src}'",
+								"type": "Expression"
+							},
+							"sch_src": {
+								"value": "'@{pipeline().parameters.sch_src}'",
+								"type": "Expression"
+							},
+							"db_src": {
+								"value": "'@{pipeline().parameters.db_src}'",
+								"type": "Expression"
+							}
+						},
+						"datasetParameters": {
+							"source1": {
+								"db_src": {
+									"value": "@pipeline().parameters.db_src",
+									"type": "Expression"
+								},
+								"user_src": {
+									"value": "@pipeline().parameters.user_src",
+									"type": "Expression"
+								},
+								"pwd_src": {
+									"value": "@pipeline().parameters.pwd_src",
+									"type": "Expression"
+								},
+								"domain_src": {
+									"value": "@pipeline().parameters.domain_src",
+									"type": "Expression"
+								},
+								"tab_src": {
+									"value": "@pipeline().parameters.tab_src",
+									"type": "Expression"
+								},
+								"sch_src": {
+									"value": "@pipeline().parameters.sch_src",
+									"type": "Expression"
+								}
+							},
+							"sink1": {
+								"domain_dest": {
+									"value": "@pipeline().parameters.domain_dest",
+									"type": "Expression"
+								},
+								"db_dest": {
+									"value": "@pipeline().parameters.db_dest",
+									"type": "Expression"
+								},
+								"user_dest": {
+									"value": "@pipeline().parameters.user_dest",
+									"type": "Expression"
+								},
+								"pwd_dest": {
+									"value": "@pipeline().parameters.pwd_dest",
+									"type": "Expression"
+								},
+								"tab_dest": {
+									"value": "@pipeline().parameters.tab_dest",
+									"type": "Expression"
+								},
+								"sch_dest": {
+									"value": "@pipeline().parameters.sch_dest",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"parameters": {
+			"domain_src": {
+				"type": "string"
+			},
+			"domain_dest": {
+				"type": "string"
+			},
+			"db_src": {
+				"type": "string"
+			},
+			"db_dest": {
+				"type": "string"
+			},
+			"user_src": {
+				"type": "string"
+			},
+			"user_dest": {
+				"type": "string"
+			},
+			"pwd_src": {
+				"type": "string"
+			},
+			"pwd_dest": {
+				"type": "string"
+			},
+			"tab_src": {
+				"type": "string"
+			},
+			"tab_dest": {
+				"type": "string"
+			},
+			"sch_src": {
+				"type": "string"
+			},
+			"sch_dest": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-03T09:42:35Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

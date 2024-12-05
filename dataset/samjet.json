@@ -1,0 +1,35 @@
+{
+	"name": "samjet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sourcelink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "amjet.xlsx",
+				"container": "khancont"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "name",
+				"type": "String"
+			},
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "salary",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

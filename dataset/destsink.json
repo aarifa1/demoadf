@@ -1,0 +1,32 @@
+{
+	"name": "destsink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "destlink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "name",
+				"type": "varchar"
+			},
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "salary",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "re"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,122 @@
+{
+	"name": "DF_union_emp",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_csv_input",
+						"type": "DatasetReference"
+					},
+					"name": "financeemp"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_testing_emp",
+						"type": "DatasetReference"
+					},
+					"name": "testingout"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_archi_emp",
+						"type": "DatasetReference"
+					},
+					"name": "architectemp"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_csv_nodept",
+						"type": "DatasetReference"
+					},
+					"name": "nodeptemp"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable3",
+						"type": "DatasetReference"
+					},
+					"name": "empunionsink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "unionemp"
+				},
+				{
+					"name": "unionselectemp"
+				},
+				{
+					"name": "sortemp"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string,",
+				"          emp_salary as string,",
+				"          dept_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> financeemp",
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string,",
+				"          emp_salary as string,",
+				"          dept_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> testingout",
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string,",
+				"          emp_salary as string,",
+				"          dept_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> architectemp",
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string,",
+				"          emp_salary as string,",
+				"          dept_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> nodeptemp",
+				"financeemp, testingout, architectemp, nodeptemp union(byName: true)~> unionemp",
+				"unionemp select(mapColumn(",
+				"          emp_id,",
+				"          emp_names = emp_name,",
+				"          dept_id,",
+				"          emp_salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> unionselectemp",
+				"unionselectemp sort(asc(emp_names, true)) ~> sortemp",
+				"sortemp sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          emp_id as integer,",
+				"          emp_name as string,",
+				"          emp_salary as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     partitionBy('hash', 1)) ~> empunionsink"
+			]
+		}
+	}
+}

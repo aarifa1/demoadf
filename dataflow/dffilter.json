@@ -1,0 +1,47 @@
+{
+	"name": "dffilter",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_wrangling1",
+						"type": "DatasetReference"
+					},
+					"name": "SRCfilter1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_csv_out",
+						"type": "DatasetReference"
+					},
+					"name": "sinkfilterdeptid1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filterdeptid"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string,",
+				"          emp_salary as string,",
+				"          dept_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SRCfilter1",
+				"SRCfilter1 filter(equals(dept_id,'100')) ~> filterdeptid",
+				"filterdeptid sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkfilterdeptid1"
+			]
+		}
+	}
+}

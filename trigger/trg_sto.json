@@ -1,0 +1,24 @@
+{
+	"name": "trg_sto",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "ppmdffilter1",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/input-trg/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/2b379197-27b4-4219-8bd6-b67f50ad9ab5/resourceGroups/khan1/providers/Microsoft.Storage/storageAccounts/amjetstorage",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

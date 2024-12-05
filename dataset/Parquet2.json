@@ -1,0 +1,38 @@
+{
+	"name": "Parquet2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_wrangling",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "part-00000-86e089be-2976-483d-b736-57afacb1bb47-c000.snappy.parquet",
+				"container": "outputwrangling"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "emp_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "emp_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "emp_salary",
+				"type": "UTF8"
+			},
+			{
+				"name": "dept_id",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

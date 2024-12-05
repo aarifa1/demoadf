@@ -1,0 +1,34 @@
+{
+	"name": "pp_mdf_conditionalsplit",
+	"properties": {
+		"activities": [
+			{
+				"name": "conditionalsplitdept_id",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DFconditionalsplitDEPT",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-11-30T06:20:38Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

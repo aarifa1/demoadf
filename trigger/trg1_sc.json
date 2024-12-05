@@ -1,0 +1,24 @@
+{
+	"name": "trg1_sc",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pp_parquettocsv_delete",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 8,
+				"startTime": "2024-11-17T22:42:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

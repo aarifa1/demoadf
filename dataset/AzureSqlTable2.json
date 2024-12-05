@@ -1,0 +1,42 @@
+{
+	"name": "AzureSqlTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dynamicval1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"database_name": {
+				"type": "string"
+			},
+			"destinationtab": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "emp_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "emp_name",
+				"type": "varchar"
+			},
+			{
+				"name": "emp_salary",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"table": {
+				"value": "@dataset().destinationtab",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

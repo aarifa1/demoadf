@@ -1,0 +1,31 @@
+{
+	"name": "ds_wrangling2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_wrangling",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "DEPT.xlsx",
+				"container": "inputwrangling"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "dep_id",
+				"type": "String"
+			},
+			{
+				"name": "dept_name",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

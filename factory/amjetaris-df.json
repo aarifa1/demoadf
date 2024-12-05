@@ -1,0 +1,9 @@
+{
+	"name": "amjetaris-df",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0127467e-31e0-4c5d-bf29-8128e689c52e",
+		"tenantId": "2913a68c-6a52-4482-98eb-478e654d1458"
+	}
+}

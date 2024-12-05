@@ -1,0 +1,28 @@
+{
+	"name": "powerquery2",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "ds_wrangling1",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ds_wrangling1",
+					"dataset": {
+						"referenceName": "ds_wrangling1",
+						"type": "DatasetReference"
+					}
+				},
+				{
+					"name": "ds_wrangling2",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ds_wrangling2",
+					"dataset": {
+						"referenceName": "ds_wrangling2",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared ds_wrangling1 = let AdfDoc = AzureStorage.BlobContents(\"https://amjetstorage.blob.core.windows.net/inputwrangling/emp_file12.xlsx\"), Excel = Excel.Workbook(AdfDoc),ExcelSheet = Excel{[Item=\"Sheet2\",Kind=\"Sheet\"]}[Data], PromotedHeaders = Table.PromoteHeaders(ExcelSheet, [PromoteAllScalars = true]) in PromotedHeaders;\r\nshared ds_wrangling2 = let AdfDoc = AzureStorage.BlobContents(\"https://amjetstorage.blob.core.windows.net/inputwrangling/DEPT.xlsx\"), Excel = Excel.Workbook(AdfDoc),ExcelSheet = Excel{[Item=\"Sheet1\",Kind=\"Sheet\"]}[Data], PromotedHeaders = Table.PromoteHeaders(ExcelSheet, [PromoteAllScalars = true]) in PromotedHeaders;\r\nshared UserQuery = let Source = #\"ds_wrangling1\",\r\n  #\"Merged queries\" = Table.NestedJoin(Source, {\"dept_id\"}, ds_wrangling2, {\"dep_id\"}, \"ds_wrangling2\", JoinKind.Inner),\r\n  #\"Expanded ds_wrangling2\" = Table.ExpandTableColumn(#\"Merged queries\", \"ds_wrangling2\", {\"dept_name\"}, {\"dept_name\"}),\r\n  #\"Grouped rows\" = Table.Group(#\"Expanded ds_wrangling2\", {\"dept_id\"}, {{\"std_in_dept\", each Table.RowCount(_), Int64.Type}}) in #\"Grouped rows\";\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}

@@ -1,0 +1,146 @@
+{
+	"name": "PP_parameterizecp",
+	"properties": {
+		"activities": [
+			{
+				"name": "parameterizeCP",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sql_dynamic_src1",
+						"type": "DatasetReference",
+						"parameters": {
+							"db_src": {
+								"value": "@pipeline().parameters.db_src",
+								"type": "Expression"
+							},
+							"user_src": {
+								"value": "@pipeline().parameters.user_src",
+								"type": "Expression"
+							},
+							"pwd_src": {
+								"value": "@pipeline().parameters.pwd_src",
+								"type": "Expression"
+							},
+							"domain_src": {
+								"value": "@pipeline().parameters.domain_src",
+								"type": "Expression"
+							},
+							"tab_src": {
+								"value": "@pipeline().parameters.tab_src",
+								"type": "Expression"
+							},
+							"sch_src": {
+								"value": "@pipeline().parameters.sch_src",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sql_dynamic_dest2",
+						"type": "DatasetReference",
+						"parameters": {
+							"domain_dest": {
+								"value": "@pipeline().parameters.domain_dest",
+								"type": "Expression"
+							},
+							"db_dest": {
+								"value": "@pipeline().parameters.db_dest",
+								"type": "Expression"
+							},
+							"user_dest": {
+								"value": "@pipeline().parameters.user_dest",
+								"type": "Expression"
+							},
+							"pwd_dest": {
+								"value": "@pipeline().parameters.pwd_dest",
+								"type": "Expression"
+							},
+							"tab_dest": {
+								"value": "@pipeline().parameters.tab_dest",
+								"type": "Expression"
+							},
+							"sch_dest": {
+								"value": "@pipeline().parameters.sch_dest",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"domain_src": {
+				"type": "string"
+			},
+			"domain_dest": {
+				"type": "string"
+			},
+			"db_src": {
+				"type": "string"
+			},
+			"db_dest": {
+				"type": "string"
+			},
+			"user_src": {
+				"type": "string"
+			},
+			"user_dest": {
+				"type": "string"
+			},
+			"pwd_src": {
+				"type": "string"
+			},
+			"pwd_dest": {
+				"type": "string"
+			},
+			"tab_src": {
+				"type": "string"
+			},
+			"tab_dest": {
+				"type": "string"
+			},
+			"sch_src": {
+				"type": "string"
+			},
+			"sch_dest": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-02T13:43:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

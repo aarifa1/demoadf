@@ -1,0 +1,32 @@
+{
+	"name": "dest_db1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lk_dstdb1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "emp_no",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "emp_name",
+				"type": "varchar"
+			},
+			{
+				"name": "salary",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "emp_temptab"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

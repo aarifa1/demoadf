@@ -1,0 +1,31 @@
+{
+	"name": "Sql_dynamicval2",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"domain_dest": {
+				"type": "String"
+			},
+			"db_dest": {
+				"type": "String"
+			},
+			"user_dest": {
+				"type": "String"
+			},
+			"pwd_dest": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "@{linkedService().domain_dest}",
+			"database": "@{linkedService().db_dest}",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "@{linkedService().user_dest}",
+			"password": "@{linkedService().pwd_dest}"
+		}
+	}
+}

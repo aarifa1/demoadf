@@ -1,0 +1,46 @@
+{
+	"name": "Parquet_test",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_wrangling",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(dataset().filename,'_',formatDateTime(utcNow(),'yyyy-mm-dd'))",
+					"type": "Expression"
+				},
+				"container": "outputwrangling"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "emp_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "emp_name",
+				"type": "UTF8"
+			},
+			{
+				"name": "emp_salary",
+				"type": "UTF8"
+			},
+			{
+				"name": "dept_id",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,50 @@
+{
+	"name": "mdfaggregate",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_wrangling1",
+						"type": "DatasetReference"
+					},
+					"name": "aggregatesource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_csv_out",
+						"type": "DatasetReference"
+					},
+					"name": "aggempcountout"
+				}
+			],
+			"transformations": [
+				{
+					"name": "empcount"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string,",
+				"          emp_salary as string,",
+				"          dept_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> aggregatesource",
+				"aggregatesource aggregate(groupBy(dept_id),",
+				"     aggregatedcount = count(emp_id)) ~> empcount",
+				"empcount sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['aggregatedcount'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> aggempcountout"
+			]
+		}
+	}
+}

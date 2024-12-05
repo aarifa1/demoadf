@@ -1,0 +1,61 @@
+{
+	"name": "ds_sql_dynamic_dest2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Sql_dynamicval2",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"domain_dest": {
+					"value": "@dataset().domain_dest",
+					"type": "Expression"
+				},
+				"db_dest": {
+					"value": "@dataset().db_dest",
+					"type": "Expression"
+				},
+				"user_dest": {
+					"value": "@dataset().user_dest",
+					"type": "Expression"
+				},
+				"pwd_dest": {
+					"value": "@dataset().pwd_dest",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"domain_dest": {
+				"type": "String"
+			},
+			"db_dest": {
+				"type": "String"
+			},
+			"user_dest": {
+				"type": "String"
+			},
+			"pwd_dest": {
+				"type": "String"
+			},
+			"tab_dest": {
+				"type": "String"
+			},
+			"sch_dest": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().sch_dest",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tab_dest",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
